@@ -49,7 +49,6 @@ public class LiFam extends AdvancedRobot {
                 setTurnRadarRightRadians(Double.POSITIVE_INFINITY);
             }
             basicMovement();
-            firingMechanics();
             execute();
         } while (true);  
         
@@ -114,8 +113,9 @@ public class LiFam extends AdvancedRobot {
        
         setFire(bulletPower);
         
-        //setTurnGunRight(efficientBearing(getHeading() - getGunHeading() + event.getBearing()));
-        
+        // Different behavior of robot based on distance of scanned enemy robot
+        // If distance of enemy robot is greater than 400, follow them straight
+        // When our robot is within 400 distance of enemy robot, be perpendicular to it
         if (event.getDistance() < 400) {
             setTurnRight(efficientBearing(event.getBearing() + 90 /*- (15 * moveDirection)*/));
         } else {
@@ -123,8 +123,10 @@ public class LiFam extends AdvancedRobot {
         }
     }
     
+    // robocode method to stop robot when closeToWall is 0
     public void onCustomEvent(CustomEvent e) {
         if (e.getCondition().getName().equals("too_close_to_walls")) {
+            // extra case to make sure that robot knows it's running into wall
             if (closeToWall <= 0) {
                 // if we weren't already dealing with the walls, we are now
                 closeToWall += wallDistance;
@@ -134,14 +136,17 @@ public class LiFam extends AdvancedRobot {
         }
     }
     
+    // Indicates to console if robot hit wall
     public void onHitWall(HitWallEvent e) { 
         System.out.println("HIT WALL"); 
     }
-
+    
+    // Sets variable closeToWall to 0 to initiate custom event
     public void onHitRobot(HitRobotEvent e) { 
         closeToWall = 0; 
     }
     
+    // If robot is hit by bullet, then turn robot left 90deg - bearing of bullet
     public void onHitByBullet(HitByBulletEvent e) {
         double currentVel = getVelocity();
         
@@ -159,9 +164,9 @@ public class LiFam extends AdvancedRobot {
         }
         turnLeft(90 - e.getBearing());
     }
-
+    
+    // 
     public void basicMovement() {
-
         // if we're close to the wall, eventually, we'll move away
         if (closeToWall > 0) {
             closeToWall--;
@@ -174,10 +179,6 @@ public class LiFam extends AdvancedRobot {
                 moveDirection *= -1;
                 setAhead(10000 * moveDirection);
         }
-    }
-    
-    public void firingMechanics() {
-    
     }
     
     // Allows us to locate bearing in shortest possible angle
