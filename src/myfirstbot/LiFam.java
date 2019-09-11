@@ -1,8 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/* 
+REFERENCES: 
+Tutorial on how to setup and basic mechanics of robocode:
+https://www.youtube.com/playlist?list=PLEb0SeDAVThdFdhrKLEF4-xjOjOVhncmT
+
+Linear Targeting Mechanic:
+https://www.youtube.com/watch?v=3KWYhhdlAUs&t=16s
+
+Robocode API: 
+https://robocode.sourceforge.io/docs/robocode/
+
+*/
 package myfirstbot;
 
 import java.awt.geom.Point2D;
@@ -68,7 +75,6 @@ public class LiFam extends AdvancedRobot {
         setTurnRadarRightRadians(radarTurn);
         
         // ************ FIRE ****************
-        // Pulled from https://www.youtube.com/watch?v=3KWYhhdlAUs&t=16s
         // Had to figure out how to break the loop if the prediction was off of map
         double bulletPower = 3.0;
         double myX = getX();
