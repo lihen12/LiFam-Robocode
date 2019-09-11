@@ -11,7 +11,7 @@ import robocode.util.Utils;
 
 /**
  *
- * @author Henry
+ * @author Henry and Brian
  */
 public class LiFam extends AdvancedRobot {
     private byte moveDirection = 1;
